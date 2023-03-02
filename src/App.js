@@ -161,7 +161,7 @@ const App = () => {
           <button onClick={() => handleChangeBG('image','/bg/Picture_office_1.jpg')}>BG1</button>
           <button onClick={() => handleChangeBG('image','/bg/Picture_office_2.jpg')}>BG2</button>
           <button onClick={() => handleChangeBG('image','/bg/Picture_office_3.jpg')}>BG3</button>
-          <button onClick={() => handleChangeBG('image','/bg/Picture_office_4.jpg')}>BG3</button>
+          <button onClick={() => handleChangeBG('image','/bg/Picture_office_4.jpg')}>BG4</button>
           <label htmlFor="contained-button-file" className="file-upload">
             <input accept="image/*" id="contained-button-file" multiple type="file" onChange={imageHandler} />
             Choose Background
@@ -169,10 +169,13 @@ const App = () => {
         </div>
         <div>
           <p>Stream video</p>
-          <video ref={videoStreamRef} autoPlay style={{
-                  width: "100%",
-                  height: "100%",
-                }}></video>
+          <video 
+            ref={videoStreamRef} 
+            autoPlay 
+            style={{
+              width: "100%",
+              height: "100%",
+            }}></video>
         </div>
       </div>
     </>
