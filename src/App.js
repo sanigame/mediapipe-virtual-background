@@ -7,10 +7,12 @@ import * as StackBlur from "stackblur-canvas";
 const App = () => {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
+  const videoStreamRef = useRef(null);
   const [imageURL, setImageURL] = useState('');
   const [vbSelected, setvbSelected] = useState('');
   
   const virtualBgRef = useRef(vbSelected);
+  let video = document.querySelector('video');
 
   
 
@@ -113,11 +115,21 @@ const App = () => {
     }
   } 
 
+  useEffect(() => {
+    if(canvasRef.current) {
+      const stream = canvasRef.current.captureStream(25);
+      videoStreamRef.current.srcObject = stream;
+    }
+    
+  }, [vbSelected, canvasRef, video]);
+  
+
   return (
     <>
       <div className="container">
         <div className="videoContainer">
           <div className="videoContent">
+            <p>Local video</p>
             <div className="video">
               <Webcam
                 ref={webcamRef}
@@ -154,6 +166,13 @@ const App = () => {
             <input accept="image/*" id="contained-button-file" multiple type="file" onChange={imageHandler} />
             Choose Background
           </label>
+        </div>
+        <div>
+          <p>Stream video</p>
+          <video ref={videoStreamRef} autoPlay style={{
+                  width: "100%",
+                  height: "100%",
+                }}></video>
         </div>
       </div>
     </>
