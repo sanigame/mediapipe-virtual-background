@@ -32,10 +32,17 @@ const App = () => {
       // canvasCtx.drawImage(results.segmentationMask, 0, 0, canvasElement.width, canvasElement.height);
 
       if(virtualBgRef.current === 'blur') {
-        canvasCtx.globalCompositeOperation = 'destination-over';
-        StackBlur.canvasRGB(canvasElement,0,0,canvasElement.width,canvasElement.height,15);
-        // canvasCtx.filter = 'blur(15px)'
+        canvasCtx.globalCompositeOperation = "copy";
+        canvasCtx.filter = `blur(3px)`;
         canvasCtx.drawImage(results.segmentationMask, 0, 0, canvasElement.width, canvasElement.height);
+
+        canvasCtx.globalCompositeOperation = 'source-out'
+        canvasCtx.filter = "none";
+        canvasCtx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height);
+
+        canvasCtx.globalCompositeOperation = "destination-over";
+        StackBlur.canvasRGB(canvasElement,0,0,canvasElement.width,canvasElement.height,15);
+        canvasCtx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height);
       } else {
         canvasCtx.globalCompositeOperation = 'destination-atop';
         canvasCtx.drawImage(results.segmentationMask, 0, 0, canvasElement.width, canvasElement.height);
@@ -44,7 +51,7 @@ const App = () => {
       }
     
     }
-
+    
     canvasCtx.restore();
   }
 
