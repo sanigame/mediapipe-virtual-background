@@ -28,16 +28,17 @@ const App = () => {
 
     if(virtualBgRef.current !== '') {
       // Only overwrite existing pixels.
-      canvasCtx.globalCompositeOperation = 'destination-atop';
-      canvasCtx.drawImage(results.segmentationMask, 0, 0, canvasElement.width, canvasElement.height);
+      // canvasCtx.globalCompositeOperation = 'destination-atop';
+      // canvasCtx.drawImage(results.segmentationMask, 0, 0, canvasElement.width, canvasElement.height);
 
       if(virtualBgRef.current === 'blur') {
-        canvasCtx.globalCompositeOperation = 'destination-atop';
+        canvasCtx.globalCompositeOperation = 'destination-over';
         StackBlur.canvasRGB(canvasElement,0,0,canvasElement.width,canvasElement.height,15);
         // canvasCtx.filter = 'blur(15px)'
         canvasCtx.drawImage(results.segmentationMask, 0, 0, canvasElement.width, canvasElement.height);
       } else {
-        // Only overwrite missing pixels.
+        canvasCtx.globalCompositeOperation = 'destination-atop';
+        canvasCtx.drawImage(results.segmentationMask, 0, 0, canvasElement.width, canvasElement.height);
         canvasCtx.globalCompositeOperation = 'destination-over';
         canvasCtx.drawImage(img, 0, 0, canvasElement.width, canvasElement.height);
       }
