@@ -32,6 +32,7 @@ const App = () => {
       // canvasCtx.drawImage(results.segmentationMask, 0, 0, canvasElement.width, canvasElement.height);
 
       if(virtualBgRef.current === 'blur') {
+        // Blur background
         canvasCtx.globalCompositeOperation = "copy";
         canvasCtx.filter = `blur(3px)`;
         canvasCtx.drawImage(results.segmentationMask, 0, 0, canvasElement.width, canvasElement.height);
@@ -44,8 +45,10 @@ const App = () => {
         StackBlur.canvasRGB(canvasElement,0,0,canvasElement.width,canvasElement.height,15);
         canvasCtx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height);
       } else {
+        // Image background
         canvasCtx.globalCompositeOperation = 'destination-atop';
         canvasCtx.drawImage(results.segmentationMask, 0, 0, canvasElement.width, canvasElement.height);
+
         canvasCtx.globalCompositeOperation = 'destination-over';
         canvasCtx.drawImage(img, 0, 0, canvasElement.width, canvasElement.height);
       }
@@ -121,7 +124,7 @@ const App = () => {
       videoStreamRef.current.srcObject = stream;
     }
     return () => {};
-  }, [vbSelected, canvasRef]);
+  }, [canvasRef]);
 
   useEffect(() => {
     navigator.mediaDevices
