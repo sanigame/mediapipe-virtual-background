@@ -99,6 +99,7 @@ const App = () => {
 
       camera.start();
     }
+    return () => {};
   }, []);
 
   useEffect(() => {
@@ -111,19 +112,19 @@ const App = () => {
       const stream = canvasRef.current.captureStream(25);
       videoStreamRef.current.srcObject = stream;
     }
-    
+    return () => {};
   }, [vbSelected, canvasRef]);
 
   useEffect(() => {
     navigator.mediaDevices
-    .getUserMedia({ video: true, audio: false })
-    .then((stream) => {
-      document.getElementById('video-source').srcObject = stream
-    })
-    .catch((err) => {
-      alert(`Following error occured: ${err}`);
-    });
-  
+      .getUserMedia({ video: true, audio: false })
+      .then((stream) => {
+        document.getElementById('video-source').srcObject = stream
+      })
+      .catch((err) => {
+        alert(`Following error occured: ${err}`);
+      });
+
     return () => {};
   }, []);
   
