@@ -1,25 +1,20 @@
 import React, { useRef, useEffect, useState } from "react";
-import Webcam from "react-webcam";
 import { SelfieSegmentation } from "@mediapipe/selfie_segmentation";
 import * as cam from "@mediapipe/camera_utils";
 import * as StackBlur from "stackblur-canvas";
 
 const App = () => {
-  const webcamRef = useRef(null);
+  let webcamRef = useRef(null);
   const canvasRef = useRef(null);
   const videoStreamRef = useRef(null);
   const [imageURL, setImageURL] = useState('');
   const [vbSelected, setvbSelected] = useState('');
-  
   const virtualBgRef = useRef(vbSelected);
-  let video = document.querySelector('video');
-
-  
 
   const onResults = async (results) => {
     const img = document.getElementById('vbackground')
-    const videoWidth = webcamRef.current.video.videoWidth;
-    const videoHeight = webcamRef.current.video.videoHeight;
+    const videoWidth = webcamRef.current.videoWidth;
+    const videoHeight = webcamRef.current.videoHeight;
 
     canvasRef.current.width = videoWidth;
     canvasRef.current.height = videoHeight;
@@ -49,46 +44,8 @@ const App = () => {
     
     }
 
-    
-    
     canvasCtx.restore();
   }
-  
-
-  useEffect(() => {
-    const selfieSegmentation = new SelfieSegmentation({
-      locateFile: (file) => {
-        return `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/${file}`;
-      },
-    });
-
-    selfieSegmentation.setOptions({
-      modelSelection: 1,
-    });
-
-    selfieSegmentation.onResults(onResults);
-
-    if (
-      typeof webcamRef.current !== "undefined" &&
-      webcamRef.current !== null
-    ) {
-      const camera = new cam.Camera(webcamRef.current.video, {
-        onFrame: async () => {
-          await selfieSegmentation.send({ image: webcamRef.current.video });
-        },
-        width: 1280,
-        height: 720
-      });
-
-      camera.start();
-    }
-  }, []);
-
-  useEffect(() => {
-    virtualBgRef.current = vbSelected
-    return () => {};
-  }, [vbSelected]);
-  
 
   const imageHandler = (e) => {
     const reader = new FileReader();
@@ -113,7 +70,41 @@ const App = () => {
         setvbSelected('');
         break;
     }
-  } 
+  }
+  
+  useEffect(() => {
+    const selfieSegmentation = new SelfieSegmentation({
+      locateFile: (file) => {
+        return `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/${file}`;
+      },
+    });
+
+    selfieSegmentation.setOptions({
+      modelSelection: 1,
+    });
+
+    selfieSegmentation.onResults(onResults);
+    
+    if (
+      typeof webcamRef.current !== "undefined" &&
+      webcamRef.current !== null
+    ) {
+      const camera = new cam.Camera(webcamRef.current, {
+        onFrame: async () => {
+          await selfieSegmentation.send({ image: webcamRef.current });
+        },
+        width: 1280,
+        height: 720
+      });
+
+      camera.start();
+    }
+  }, []);
+
+  useEffect(() => {
+    virtualBgRef.current = vbSelected
+    return () => {};
+  }, [vbSelected]); 
 
   useEffect(() => {
     if(canvasRef.current) {
@@ -121,7 +112,21 @@ const App = () => {
       videoStreamRef.current.srcObject = stream;
     }
     
-  }, [vbSelected, canvasRef, video]);
+  }, [vbSelected, canvasRef]);
+
+  useEffect(() => {
+    navigator.mediaDevices
+    .getUserMedia({ video: true, audio: false })
+    .then((stream) => {
+      document.getElementById('video-source').srcObject = stream
+    })
+    .catch((err) => {
+      alert(`Following error occured: ${err}`);
+    });
+  
+    return () => {};
+  }, []);
+  
   
 
   return (
@@ -131,15 +136,15 @@ const App = () => {
           <div className="videoContent">
             <p>Local video</p>
             <div className="video">
-              <Webcam
+              <video
                 ref={webcamRef}
+                id="video-source"
+                autoPlay 
                 style={{
-                  display: "none",
                   width: "100%",
                   height: "100%",
-                  transform: "scaleX(-1)"
-                }}
-              />
+                }}></video>
+              <p>Canvas video</p>
               <canvas
                 ref={canvasRef}
                 style={{
@@ -171,6 +176,7 @@ const App = () => {
           <p>Stream video</p>
           <video 
             ref={videoStreamRef} 
+            id="video-stream"
             autoPlay 
             style={{
               width: "100%",
