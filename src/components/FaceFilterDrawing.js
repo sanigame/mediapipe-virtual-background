@@ -28,7 +28,7 @@ const FaceFilterDrawing = () => {
   const canvasRef = useRef(null);
   const faceMeshRef = useRef(null)
 
-  function onResults(results) {
+  const faceDrawing = (results) => {
     const videoWidth = webcamRef.current.videoWidth
     const videoHeight = webcamRef.current.videoHeight
 
@@ -74,6 +74,10 @@ const FaceFilterDrawing = () => {
         }
       }
       canvasCtx.restore();
+  }
+
+  const onResults = (results) => {
+    faceDrawing(results)
   }
 
   useEffect(() => {
