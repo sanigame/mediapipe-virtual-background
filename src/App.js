@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import Background from "./components/Background";
-import FaceFilter from "./components/FaceFilter";
+import FaceFilterDrawing from "./components/FaceFilterDrawing";
 
 
 const App = () => {
@@ -14,7 +14,7 @@ const App = () => {
       </button>
       <br />
       <br />
-     {isBgMode ? <Background /> : <FaceFilter />}
+     {isBgMode ? <Background /> : <FaceFilterDrawing />}
     </>
   );
 }
