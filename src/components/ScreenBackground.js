@@ -5,10 +5,15 @@ import * as cam from "@mediapipe/camera_utils";
 const ScreenBackground = () => {
   let webcamRef = useRef(null);
   const canvasRef = useRef(null);
+  const foregroundCanvasRef = useRef(null);
   const videoStreamRef = useRef(null);
   const [isShareScreen, setIsShareScreen] = useState(false);
-  const isSharescreenRef = useRef(null);
+  const [isPresenter, setIsPresenter] = useState(true);
   
+  const isSharescreenRef = useRef(null);
+  const isPresenterRef = useRef(null);
+  
+  let presenterModeOffset = 0;
 
   const onResults = async (results) => {
     const screenSource = document.getElementById('screen-source')
@@ -21,16 +26,50 @@ const ScreenBackground = () => {
     const canvasElement = canvasRef.current;
     const canvasCtx = canvasElement.getContext("2d");
 
+    const foregroundCanvasElement = foregroundCanvasRef.current;
+    const foregroundCanvasCtx = foregroundCanvasElement.getContext("2d");
+
     canvasCtx.save();
     canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
     canvasCtx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height);
     
     if(isSharescreenRef.current) {
-      canvasCtx.globalCompositeOperation = 'destination-atop';
-      canvasCtx.drawImage(results.segmentationMask, 0, 0, canvasElement.width, canvasElement.height);
+      if(isPresenterRef.current) {
+        foregroundCanvasCtx.save();
+        foregroundCanvasCtx.clearRect(0, 0, foregroundCanvasElement.width, foregroundCanvasElement.height);
+        foregroundCanvasCtx.drawImage(
+          results.segmentationMask,
+          0,
+          0,
+          foregroundCanvasElement.width,
+          foregroundCanvasElement.height
+        );
+        foregroundCanvasCtx.globalCompositeOperation = 'source-in';
+        foregroundCanvasCtx.drawImage(
+          results.image,
+          0,
+          0,
+          foregroundCanvasElement.width,
+          foregroundCanvasElement.height
+        );
+      
+        foregroundCanvasCtx.restore();
 
-      canvasCtx.globalCompositeOperation = 'destination-over';
-      canvasCtx.drawImage(screenSource, 0, 0, canvasElement.width, canvasElement.height);
+        canvasCtx.drawImage(screenSource, 0, 0);
+        canvasCtx.drawImage(
+          foregroundCanvasElement,
+          canvasElement.width * 0.5 - presenterModeOffset,
+          canvasElement.height * 0.5,
+          canvasElement.width * 0.5,
+          canvasElement.height * 0.5,
+        );
+      } else {
+        canvasCtx.globalCompositeOperation = 'destination-atop';
+        canvasCtx.drawImage(results.segmentationMask, 0, 0, canvasElement.width, canvasElement.height);
+
+        canvasCtx.globalCompositeOperation = 'destination-over';
+        canvasCtx.drawImage(screenSource, 0, 0, canvasElement.width, canvasElement.height);
+      } 
     }
 
     
@@ -66,12 +105,18 @@ const ScreenBackground = () => {
       camera.start();
     }
     return () => {};
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     isSharescreenRef.current = isShareScreen
     return () => {};
   }, [isShareScreen]); 
+
+  useEffect(() => {
+    isPresenterRef.current = isPresenter
+    return () => {};
+  }, [isPresenter]); 
 
   useEffect(() => {
     if(canvasRef.current) {
@@ -115,6 +160,8 @@ const ScreenBackground = () => {
         <div className="videoContainer">
           <div className="videoContent">
           <button onClick={() => handleShareScreen()}>Sharescreen</button>
+          <button onClick={() => setIsPresenter(true)}>Presenter</button>
+          <button onClick={() => setIsPresenter(false)}>Screen Background</button>
             <p>Local video</p>
             <div className="video">
               <video
@@ -134,6 +181,13 @@ const ScreenBackground = () => {
               <p>Canvas video</p>
               <canvas
                 ref={canvasRef}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                }}
+              ></canvas>
+              <canvas
+                ref={foregroundCanvasRef}
                 style={{
                   width: "100%",
                   height: "100%",
