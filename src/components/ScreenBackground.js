@@ -56,7 +56,7 @@ const ScreenBackground = () => {
       
         foregroundCanvasCtx.restore();
 
-        canvasCtx.drawImage(screenSource, 0, 0);
+        canvasCtx.drawImage(screenSource, 0, 0,canvasElement.width, canvasElement.height);
         canvasCtx.drawImage(
           foregroundCanvasElement,
           canvasElement.width * 0.5 - presentOffsetRef.current,
