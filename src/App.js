@@ -7,7 +7,7 @@ import ScreenBackground from "./components/ScreenBackground";
 
 
 const App = () => {
-  const [bgComponent, setBgComponent] = useState('ScreenBackground');
+  const [bgComponent, setBgComponent] = useState('Background');
   
   
   return (

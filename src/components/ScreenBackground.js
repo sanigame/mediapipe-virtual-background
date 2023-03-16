@@ -9,11 +9,12 @@ const ScreenBackground = () => {
   const videoStreamRef = useRef(null);
   const [isShareScreen, setIsShareScreen] = useState(false);
   const [isPresenter, setIsPresenter] = useState(true);
+  const [presentOffset, setPresentOffset] = useState(0);
+
   
   const isSharescreenRef = useRef(null);
   const isPresenterRef = useRef(null);
-  
-  let presenterModeOffset = 0;
+  const presentOffsetRef = useRef(0);
 
   const onResults = async (results) => {
     const screenSource = document.getElementById('screen-source')
@@ -28,7 +29,7 @@ const ScreenBackground = () => {
 
     const foregroundCanvasElement = foregroundCanvasRef.current;
     const foregroundCanvasCtx = foregroundCanvasElement.getContext("2d");
-
+    
     canvasCtx.save();
     canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
     canvasCtx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height);
@@ -58,7 +59,7 @@ const ScreenBackground = () => {
         canvasCtx.drawImage(screenSource, 0, 0);
         canvasCtx.drawImage(
           foregroundCanvasElement,
-          canvasElement.width * 0.5 - presenterModeOffset,
+          canvasElement.width * 0.5 - presentOffsetRef.current,
           canvasElement.height * 0.5,
           canvasElement.width * 0.5,
           canvasElement.height * 0.5,
@@ -119,6 +120,11 @@ const ScreenBackground = () => {
   }, [isPresenter]); 
 
   useEffect(() => {
+    presentOffsetRef.current = presentOffset
+    return () => {};
+  }, [presentOffset]); 
+
+  useEffect(() => {
     if(canvasRef.current) {
       const stream = canvasRef.current.captureStream(25);
       videoStreamRef.current.srcObject = stream;
@@ -141,7 +147,7 @@ const ScreenBackground = () => {
   
   const handleShareScreen = () => {
     navigator.mediaDevices
-      .getDisplayMedia({ video: true })
+      .getDisplayMedia({ video: true, audio: true })
       .then((stream) => {
         document.getElementById('screen-source').srcObject = stream
         setIsShareScreen(true)
@@ -152,7 +158,6 @@ const ScreenBackground = () => {
       });
   }
   
-  
 
   return (
     <>
@@ -162,6 +167,20 @@ const ScreenBackground = () => {
           <button onClick={() => handleShareScreen()}>Sharescreen</button>
           <button onClick={() => setIsPresenter(true)}>Presenter</button>
           <button onClick={() => setIsPresenter(false)}>Screen Background</button>
+          <div>
+            <span id="presenterOffsetContainer">
+            Offset: 
+            <input 
+              type="range" 
+              id="offset" 
+              name="offset"
+              min="-500"
+              max="500"
+              value={presentOffset}
+              onChange={(e) => setPresentOffset(e.target.value)}
+            />
+            </span>
+          </div>
             <p>Local video</p>
             <div className="video">
               <video
@@ -176,7 +195,9 @@ const ScreenBackground = () => {
                 id="screen-source"
                 autoPlay 
                 style={{
-                  display:'none'
+                  display:'none',
+                  width: "100%",
+                  height: "100%",
                 }}></video>
               <p>Canvas video</p>
               <canvas
@@ -189,6 +210,7 @@ const ScreenBackground = () => {
               <canvas
                 ref={foregroundCanvasRef}
                 style={{
+                  display:'none',
                   width: "100%",
                   height: "100%",
                 }}

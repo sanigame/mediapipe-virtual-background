@@ -34,7 +34,7 @@ const Background = () => {
       if(virtualBgRef.current === 'blur') {
         // Blur background
         canvasCtx.globalCompositeOperation = "copy";
-        canvasCtx.filter = `blur(3px)`;
+        // canvasCtx.filter = `blur(3px)`;
         canvasCtx.drawImage(results.segmentationMask, 0, 0, canvasElement.width, canvasElement.height);
 
         canvasCtx.globalCompositeOperation = 'source-out'
