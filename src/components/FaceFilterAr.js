@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { MindARThree } from "mind-ar/dist/mindar-face-three.prod.js";
 import * as THREE from "three";
 
@@ -10,8 +10,11 @@ const FaceFilterAr = () => {
   const [imageURL, setImageURL] = useState(
     "/filter/canonical_face_model_uv_visualization.png"
   );
+  const [isStart, setIsStart] = useState(false);
+  
 
-  const startAr = (filterImg) => {
+  const init = (filterImg) => {
+    setIsStart(true)
     const mindarThree = new MindARThree({
       container: containerRef.current,
     });
@@ -39,27 +42,29 @@ const FaceFilterAr = () => {
     const reader = new FileReader();
     reader.onload = () => {
       if (reader.readyState === 2) {
-        rendererRef.current.setAnimationLoop(null);
-        mindarThreeRef.current.stop();
-        console.log('reader.result', reader.result);
-        
         setImageURL(reader.result);
-        startAr(reader.result)
       }
     };
     reader.readAsDataURL(e.target.files[0]);
   };
 
-  
+  const startAr = () => {
+    setIsStart(true)
+    setTimeout(() => { init(imageURL) }, 1000)
+  }
 
-  useEffect(() => {
-    startAr(imageURL)
-    return () => {};
-  }, []);
+  const stopAr = () => {
+    setIsStart(false)
+    mindarThreeRef.current.stop();
+	  mindarThreeRef.current.renderer.setAnimationLoop(null);
+  }
+
 
   return (
     <>
       <div>
+        <button onClick={() =>  startAr(imageURL)}>start</button>
+        <button onClick={() =>  stopAr()}>stop</button>
         <label htmlFor="contained-button-file" className="file-upload">
           <input
             accept="image/*"
@@ -81,7 +86,7 @@ const FaceFilterAr = () => {
       </div>
 
       <div className="container">
-        <div style={{ width: "100%", height: "100%" }} ref={containerRef}></div>
+        {isStart ? <div style={{ width: "100%", height: "100%" }} ref={containerRef}></div> : null}
       </div>
     </>
   );
