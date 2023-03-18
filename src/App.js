@@ -5,10 +5,11 @@ import FaceFilter from "./components/FaceFilter";
 import FaceFilterDrawing from "./components/FaceFilterDrawing";
 import ScreenBackground from "./components/ScreenBackground";
 import FaceFilter3d from "./components/FaceFilter3d";
+import FaceFilterAr from "./components/FaceFilterAr";
 
 
 const App = () => {
-  const [bgComponent, setBgComponent] = useState('Background');
+  const [bgComponent, setBgComponent] = useState('FaceFilterAr');
   
   
   return (
@@ -18,6 +19,7 @@ const App = () => {
       <button onClick={() => setBgComponent('FaceFilter')}>FaceFilter</button>
       <button onClick={() => setBgComponent('FaceFilterDrawing')}>FaceFilterDrawing</button> 
       <button onClick={() => setBgComponent('FaceFilter3d')}>FaceFilter3d</button> 
+      <button onClick={() => setBgComponent('FaceFilterAr')}>FaceFilterAr</button> 
       <br />
       <br />
       {bgComponent === 'Background' ? <Background /> : null}
@@ -25,6 +27,7 @@ const App = () => {
       {bgComponent === 'FaceFilterDrawing' ? <FaceFilterDrawing /> : null}
       {bgComponent === 'ScreenBackground' ? <ScreenBackground /> : null}
       {bgComponent === 'FaceFilter3d' ? <FaceFilter3d /> : null}
+      {bgComponent === 'FaceFilterAr' ? <FaceFilterAr /> : null}
     </>
   );
 }
