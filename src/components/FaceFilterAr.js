@@ -15,7 +15,7 @@ const FaceFilterAr = () => {
     scene.add(light);
     const faceMesh = mindarThree.addFaceMesh();
     const texture = new THREE.TextureLoader().load(
-      "https://raw.githubusercontent.com/google/mediapipe/master/mediapipe/modules/face_geometry/data/canonical_face_model_uv_visualization.png"
+      "/filter/face-mask.png"
     );
     faceMesh.material.map = texture;
     faceMesh.material.transparent = true;
@@ -30,7 +30,14 @@ const FaceFilterAr = () => {
     return () => {}
   }, []);
 
-  return (<div style={{width: "100%", height: "100%"}} ref={containerRef}></div>);
+  return (
+    <>
+      <p>upload</p>
+      <div className="container">
+        <div style={{width: "100%", height: "100%"}} ref={containerRef}></div>
+      </div>
+    </>
+  );
 };
 
 export default FaceFilterAr;
