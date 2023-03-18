@@ -13,7 +13,7 @@ const App = () => {
   
   
   return (
-    <>
+    <div className="App">
       <button onClick={() => setBgComponent('Background')}>Background</button>
       <button onClick={() => setBgComponent('ScreenBackground')}>ScreenBackground</button>
       <button onClick={() => setBgComponent('FaceFilter')}>FaceFilter</button>
@@ -27,8 +27,8 @@ const App = () => {
       {bgComponent === 'FaceFilterDrawing' ? <FaceFilterDrawing /> : null}
       {bgComponent === 'ScreenBackground' ? <ScreenBackground /> : null}
       {/* {bgComponent === 'FaceFilter3d' ? <FaceFilter3d /> : null} */}
-      {bgComponent === 'FaceFilterAr' ? <FaceFilterAr /> : null}
-    </>
+      {bgComponent === 'FaceFilterAr' ? <div className="container"><FaceFilterAr /></div> : null}
+    </div>
   );
 }
 

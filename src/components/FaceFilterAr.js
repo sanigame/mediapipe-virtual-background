@@ -30,7 +30,7 @@ const FaceFilterAr = () => {
     return () => {}
   }, []);
 
-  return <div style={{width: "100%", height: "100%"}} ref={containerRef}></div>;
+  return (<div style={{width: "100%", height: "100%"}} ref={containerRef}></div>);
 };
 
 export default FaceFilterAr;
