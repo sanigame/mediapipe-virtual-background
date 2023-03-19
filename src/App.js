@@ -9,7 +9,7 @@ import FaceFilterDrawing from './components/FaceFilterDrawing'
 import ScreenBackground from './components/ScreenBackground'
 
 function App() {
-  const [bgComponent, setBgComponent] = useState('FaceFilter3d')
+  const [bgComponent, setBgComponent] = useState('Background')
 
   return (
     <div className="App">

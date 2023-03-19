@@ -166,7 +166,7 @@ const ScreenBackground = () => {
 
   return (
     <>
-      <div className="container">
+      <div>
         <div className="videoContainer">
           <div className="videoContent">
             <button onClick={() => handleShareScreen()}>Sharescreen</button>

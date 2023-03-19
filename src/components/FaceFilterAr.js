@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react'
 
 import * as THREE from 'three'
 
-import { MindARThree } from '../libs/face-target/three'
+import { VroomARThree } from '../libs/face-target/three'
 
 const FaceFilterAr = () => {
   const containerRef = useRef(null)
@@ -14,7 +14,7 @@ const FaceFilterAr = () => {
 
   const init = (filterImg) => {
     setIsStart(true)
-    const mindarThree = new MindARThree({
+    const mindarThree = new VroomARThree({
       container: containerRef.current,
     })
     mindarThreeRef.current = mindarThree

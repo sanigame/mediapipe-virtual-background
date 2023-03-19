@@ -15,7 +15,7 @@ import { CSS3DRenderer } from 'three/addons/renderers/CSS3DRenderer.js'
 import { Controller } from './controller.js'
 const THREE = { BufferGeometry, BufferAttribute }
 
-export class MindARThree {
+export class VroomARThree {
   constructor({ container, filterMinCF = null, filterBeta = null }) {
     this.container = container
 
@@ -97,7 +97,7 @@ export class MindARThree {
       this.video.setAttribute('muted', '')
       this.video.setAttribute('playsinline', '')
       this.video.style.position = 'absolute'
-      this.video.style.top = '0px'
+      this.video.style.top = '500px'
       this.video.style.left = '0px'
       this.video.style.zIndex = '-2'
       this.container.appendChild(this.video)
@@ -255,12 +255,12 @@ export class MindARThree {
   }
 }
 
-if (!window.MINDAR) {
-  window.MINDAR = {}
-}
-if (!window.MINDAR.FACE) {
-  window.MINDAR.FACE = {}
-}
+// if (!window.MINDAR) {
+//   window.MINDAR = {}
+// }
+// if (!window.MINDAR.FACE) {
+//   window.MINDAR.FACE = {}
+// }
 
-window.MINDAR.FACE.MindARThree = MindARThree
+// window.MINDAR.FACE.MindARThree = MindARThree
 //window.MINDAR.FACE.THREE = THREE;

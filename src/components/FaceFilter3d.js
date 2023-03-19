@@ -282,8 +282,8 @@ const FaceFilter3d = () => {
   }, [])
 
   return (
-    <div>
-      <div className="container">
+    <>
+      <div>
         <video
           ref={webcamRef}
           id="video-source"
@@ -294,7 +294,7 @@ const FaceFilter3d = () => {
           }}></video>
         <canvas className="output_canvas" width="1280px" height="720px"></canvas>
       </div>
-    </div>
+    </>
   )
 }
 

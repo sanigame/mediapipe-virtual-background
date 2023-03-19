@@ -151,61 +151,59 @@ const Background = () => {
 
   return (
     <>
-      <div className="container">
-        <div className="videoContainer">
-          <div className="backgroundContainer">
-            <div className="backgrounds" style={{ display: 'none' }}>
-              <img id="vbackground" src={imageURL} alt="The Screan" className="background" />
-            </div>
-            <button onClick={() => handleChangeBG('')}>Clear</button>
-            <button onClick={() => handleChangeBG('blur')}>Blur</button>
-            <button onClick={() => handleChangeBG('image', '/bg/Picture_office_1.jpg')}>BG1</button>
-            <button onClick={() => handleChangeBG('image', '/bg/Picture_office_2.jpg')}>BG2</button>
-            <button onClick={() => handleChangeBG('image', '/bg/Picture_office_3.jpg')}>BG3</button>
-            <button onClick={() => handleChangeBG('image', '/bg/Picture_office_4.jpg')}>BG4</button>
-            <label htmlFor="contained-button-file" className="file-upload">
-              <input
-                accept="image/*"
-                id="contained-button-file"
-                multiple
-                type="file"
-                onChange={imageHandler}
-              />
-              Choose Background
-            </label>
-          </div>
-          <div className="videoContent">
-            <p>Local video</p>
-            <div className="video">
-              <video
-                ref={webcamRef}
-                id="video-source"
-                autoPlay
-                style={{
-                  width: '100%',
-                  height: '100%',
-                }}></video>
-              <p>Canvas video</p>
-              <canvas
-                ref={canvasRef}
-                style={{
-                  width: '100%',
-                  height: '100%',
-                }}></canvas>
-            </div>
-          </div>
-        </div>
+      <div>
         <div>
-          <p>Stream video</p>
-          <video
-            ref={videoStreamRef}
-            id="video-stream"
-            autoPlay
-            style={{
-              width: '100%',
-              height: '100%',
-            }}></video>
+          <div className="backgrounds" style={{ display: 'none' }}>
+            <img id="vbackground" src={imageURL} alt="The Screan" className="background" />
+          </div>
+          <button onClick={() => handleChangeBG('')}>Clear</button>
+          <button onClick={() => handleChangeBG('blur')}>Blur</button>
+          <button onClick={() => handleChangeBG('image', '/bg/Picture_office_1.jpg')}>BG1</button>
+          <button onClick={() => handleChangeBG('image', '/bg/Picture_office_2.jpg')}>BG2</button>
+          <button onClick={() => handleChangeBG('image', '/bg/Picture_office_3.jpg')}>BG3</button>
+          <button onClick={() => handleChangeBG('image', '/bg/Picture_office_4.jpg')}>BG4</button>
+          <label htmlFor="contained-button-file" className="file-upload">
+            <input
+              accept="image/*"
+              id="contained-button-file"
+              multiple
+              type="file"
+              onChange={imageHandler}
+            />
+            Choose Background
+          </label>
         </div>
+        <div className="videoContent">
+          <p>Local video</p>
+          <div className="video">
+            <video
+              ref={webcamRef}
+              id="video-source"
+              autoPlay
+              style={{
+                width: '100%',
+                height: '100%',
+              }}></video>
+            <p>Canvas video</p>
+            <canvas
+              ref={canvasRef}
+              style={{
+                width: '100%',
+                height: '100%',
+              }}></canvas>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p>Stream video</p>
+        <video
+          ref={videoStreamRef}
+          id="video-stream"
+          autoPlay
+          style={{
+            width: '100%',
+            height: '100%',
+          }}></video>
       </div>
     </>
   )
