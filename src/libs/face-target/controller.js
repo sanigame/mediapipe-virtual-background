@@ -1,5 +1,5 @@
 import { OneEuroFilter } from '../one-euro-filter.js'
-import { opencv, waitCV } from '../opencv-helper.js'
+import { waitCV } from '../opencv-helper.js'
 
 import { Estimator } from './face-geometry/estimator.js'
 import { positions as canonicalMetricLandmarks } from './face-geometry/face-data.js'
@@ -80,8 +80,8 @@ class Controller {
           this.lastEstimateResult = estimateResult
         } else {
           const lastMetricLandmarks = this.lastEstimateResult.metricLandmarks
-          const lastFaceMatrix = this.lastEstimateResult.faceMatrix
-          const lastFaceScale = this.lastEstimateResult.faceScale
+          // const lastFaceMatrix = this.lastEstimateResult.faceMatrix
+          // const lastFaceScale = this.lastEstimateResult.faceScale
 
           const newMetricLandmarks = []
           for (let i = 0; i < lastMetricLandmarks.length; i++) {

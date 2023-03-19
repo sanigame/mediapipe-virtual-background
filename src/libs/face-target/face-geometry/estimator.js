@@ -18,7 +18,7 @@ for (let i = 0; i < landmarkWeights.length; i++) {
 }
 
 const majorLandmarkIndexes = [33, 263, 61, 291, 199] // for computing solvePnP
-landmarkBasis.forEach(([index, w]) => {
+landmarkBasis.forEach(([index]) => {
   if (!majorLandmarkIndexes.includes(index)) {
     majorLandmarkIndexes.push(index)
   }

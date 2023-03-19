@@ -4,7 +4,7 @@ const nLandmarks = uvs.length
 
 const createThreeFaceGeometry = (THREE) => {
   class FaceGeometry extends THREE.BufferGeometry {
-    constructor(options = {}) {
+    constructor() {
       super()
 
       this.positions = new Float32Array(nLandmarks * 3)

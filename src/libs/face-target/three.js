@@ -129,9 +129,9 @@ export class MindARThree {
   }
 
   _startAR() {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
       const video = this.video
-      const container = this.container
+      // const container = this.container
 
       this.controller.onUpdate = ({ hasFace, estimateResult }) => {
         for (let i = 0; i < this.anchors.length; i++) {
@@ -148,7 +148,11 @@ export class MindARThree {
         }
 
         if (hasFace) {
-          const { metricLandmarks, faceMatrix, faceScale } = estimateResult
+          const {
+            // metricLandmarks,
+            faceMatrix,
+            // faceScale
+          } = estimateResult
           for (let i = 0; i < this.anchors.length; i++) {
             const landmarkIndex = this.anchors[i].landmarkIndex
             const landmarkMatrix = this.controller.getLandmarkMatrix(landmarkIndex)
@@ -205,7 +209,7 @@ export class MindARThree {
   }
 
   _resize() {
-    const { renderer, cssRenderer, camera, container, video } = this
+    const { renderer, cssRenderer, container, video } = this
     if (!video) return
 
     let vw, vh // display css width, height

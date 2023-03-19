@@ -26,7 +26,7 @@ class FaceMeshHelper {
   }
 
   async detect(input) {
-    const results = await new Promise((resolve, reject) => {
+    const results = await new Promise((resolve) => {
       this.detectResolve = resolve
       this.faceMesh.send({ image: input })
     })
