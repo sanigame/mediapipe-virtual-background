@@ -9,6 +9,7 @@ import {
 } from 'three'
 //import { CSS3DRenderer } from '../libs/CSS3DRenderer.js';
 import { BufferGeometry, BufferAttribute } from 'three'
+// eslint-disable-next-line import/no-unresolved
 import { CSS3DRenderer } from 'three/addons/renderers/CSS3DRenderer.js'
 
 import { Controller } from './controller.js'
@@ -129,6 +130,7 @@ export class MindARThree {
   }
 
   _startAR() {
+    // eslint-disable-next-line no-async-promise-executor
     return new Promise(async (resolve) => {
       const video = this.video
       // const container = this.container

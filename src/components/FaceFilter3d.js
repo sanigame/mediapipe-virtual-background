@@ -1,8 +1,10 @@
+/* eslint-disable jsx-a11y/media-has-caption */
 import React, { useEffect, useRef } from 'react'
+
+import { Camera } from '@mediapipe/camera_utils'
+import { FaceMesh } from '@mediapipe/face_mesh'
 import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
-import { FaceMesh } from '@mediapipe/face_mesh'
-import { Camera } from '@mediapipe/camera_utils'
 
 const smoothingFactor = (te, cutoff) => {
   const r = 2 * Math.PI * cutoff * te
@@ -70,20 +72,19 @@ class OneEuroFilter {
 }
 
 class EffectRenderer {
-  VIDEO_DEPTH = 500
-  FOV_DEGREES = 63
-  NEAR = 1
-  FAR = 10000
-
-  scene
-  renderer
-  faceGroup
-
-  camera
-  matrixX = []
-  filters
-
   constructor() {
+    this.VIDEO_DEPTH = 500
+    this.FOV_DEGREES = 63
+    this.NEAR = 1
+    this.FAR = 10000
+
+    this.scene
+    this.renderer
+    this.faceGroup
+
+    this.camera
+    this.matrixX = []
+    this.filters
     this.scene = new THREE.Scene()
     this.filters = new OneEuroFilter({ minCutOff: 0.001, beta: 1 })
 
@@ -135,7 +136,7 @@ class EffectRenderer {
         const scene2 = glt2f.scene
         scene2.position.set(0, 0, 7)
         scene2.scale.set(1, 1.05, 1)
-        const oc1 = scene2.children[0]
+        // const oc1 = scene2.children[0]
 
         // const oc1 = scene2.getObjectByName('canonical-face-model');
 
@@ -159,7 +160,7 @@ class EffectRenderer {
     this.onCanvasDimsUpdate()
 
     console.log()
-    const image = await createImageBitmap(results.image)
+    // const image = await createImageBitmap(results.image)
     const imagePlane = this.createGpuBufferPlane(results.image)
     this.scene.add(imagePlane)
 

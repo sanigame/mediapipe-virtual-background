@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/media-has-caption */
 import React, { useRef, useEffect, useState } from 'react'
 
 import * as cam from '@mediapipe/camera_utils'
@@ -112,7 +113,6 @@ const ScreenBackground = () => {
       camera.start()
     }
     return () => {}
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {

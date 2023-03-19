@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/media-has-caption */
 import React, { useRef, useEffect } from 'react'
 
 import { Camera } from '@mediapipe/camera_utils'
@@ -94,7 +95,6 @@ const FaceFilterDrawing = () => {
       })
       camera.start()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
