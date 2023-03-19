@@ -1,5 +1,3 @@
 node_modules
-build
-public
 src/libs/opencv-wasm.js
 src/libs/opencv.js
