@@ -1,5 +1,7 @@
 import React, { useRef, useState } from "react";
-import { MindARThree } from "mind-ar/dist/mindar-face-three.prod.js";
+// import { MindARThree } from "mind-ar/dist/mindar-face-three.prod.js";
+import { MindARThree } from "../libs/face-target/three";
+
 import * as THREE from "three";
 
 const FaceFilterAr = () => {
