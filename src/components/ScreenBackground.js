@@ -195,6 +195,7 @@ const ScreenBackground = () => {
                 style={{
                   width: '100%',
                   height: '100%',
+                  display: 'none',
                 }}></video>
               <video
                 id="screen-source"
