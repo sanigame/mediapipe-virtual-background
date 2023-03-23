@@ -128,31 +128,6 @@ class EffectRenderer {
       })
       gltf.scene.position.set(0, -2, 0)
       gltf.scene.scale.set(20, 20, 15)
-      // loader.setPath(
-      //   'https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.5/examples/face-tracking/assets/sparkar/',
-      // )
-      // loader.load('headOccluder.glb', (glt2f) => {
-      //   console.log(glt2f)
-      //   const scene2 = glt2f.scene
-      //   scene2.position.set(0, 0, 7)
-      //   scene2.scale.set(1, 1.05, 1)
-      //   // const oc1 = scene2.children[0]
-
-      //   // const oc1 = scene2.getObjectByName('canonical-face-model');
-
-      //   glt2f.scene.traverse((node) => {
-      //     if (node.isMesh) {
-      //       node.renderOrder = 1
-      //       const mat = new THREE.MeshPhongMaterial()
-      //       mat.color.set(0x0000ff)
-      //       mat.colorWrite = false
-      //       node.material = mat
-      //     }
-      //   })
-
-      //   this.faceGroup.add(gltf.scene)
-      //   this.faceGroup.add(scene2)
-      // })
       this.faceGroup.add(gltf.scene)
     })
   }
