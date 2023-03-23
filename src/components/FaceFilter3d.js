@@ -226,6 +226,8 @@ class EffectRenderer {
 
 const FaceFilter3d = () => {
   let webcamRef = useRef(null)
+  const canvasRef = useRef(null)
+  const videoStreamRef = useRef(null)
 
   const solutionOptions = {
     selfieMode: true,
@@ -281,6 +283,14 @@ const FaceFilter3d = () => {
     return () => {}
   }, [])
 
+  useEffect(() => {
+    if (canvasRef.current) {
+      const stream = canvasRef.current.captureStream(25)
+      videoStreamRef.current.srcObject = stream
+    }
+    return () => {}
+  }, [canvasRef])
+
   return (
     <>
       <div>
@@ -292,7 +302,25 @@ const FaceFilter3d = () => {
             width: '100%',
             height: '100%',
           }}></video>
-        <canvas className="output_canvas" width="1280px" height="720px"></canvas>
+        <canvas
+          ref={canvasRef}
+          className="output_canvas"
+          width="1280px"
+          height="720px"
+          style={{
+            display: 'none',
+          }}></canvas>
+        <div>
+          <p>Stream video</p>
+          <video
+            ref={videoStreamRef}
+            id="video-stream"
+            autoPlay
+            style={{
+              width: '100%',
+              height: '100%',
+            }}></video>
+        </div>
       </div>
     </>
   )
