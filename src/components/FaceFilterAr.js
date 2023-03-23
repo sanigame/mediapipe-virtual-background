@@ -6,7 +6,7 @@ import { VroomARThree } from '../libs/face-target/three'
 
 const FaceFilterAr = () => {
   const containerRef = useRef(null)
-  const mindarThreeRef = useRef({ current: null })
+  const vroomThreeRef = useRef({ current: null })
   const rendererRef = useRef({ current: null })
 
   const [imageURL, setImageURL] = useState('/filter/canonical_face_model_uv_visualization.png')
@@ -14,24 +14,24 @@ const FaceFilterAr = () => {
 
   const init = (filterImg) => {
     setIsStart(true)
-    const mindarThree = new VroomARThree({
+    const vroomArThree = new VroomARThree({
       container: containerRef.current,
     })
-    mindarThreeRef.current = mindarThree
+    vroomThreeRef.current = vroomArThree
 
-    const { renderer, scene, camera } = mindarThree
+    const { renderer, scene, camera } = vroomArThree
     rendererRef.current = renderer
 
     const light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1)
     scene.add(light)
-    const faceMesh = mindarThree.addFaceMesh()
+    const faceMesh = vroomArThree.addFaceMesh()
     const texture = new THREE.TextureLoader().load(filterImg)
     faceMesh.material.map = texture
     faceMesh.material.transparent = true
     faceMesh.material.needsUpdate = true
     scene.add(faceMesh)
 
-    mindarThree.start()
+    vroomArThree.start()
     renderer.setAnimationLoop(() => {
       renderer.render(scene, camera)
     })
@@ -56,8 +56,8 @@ const FaceFilterAr = () => {
 
   const stopAr = () => {
     setIsStart(false)
-    mindarThreeRef.current.stop()
-    mindarThreeRef.current.renderer.setAnimationLoop(null)
+    vroomThreeRef.current.stop()
+    vroomThreeRef.current.renderer.setAnimationLoop(null)
   }
 
   return (
